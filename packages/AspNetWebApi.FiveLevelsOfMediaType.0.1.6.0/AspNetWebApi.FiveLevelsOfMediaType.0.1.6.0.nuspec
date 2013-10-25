@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>AspNetWebApi.FiveLevelsOfMediaType</id>
+    <version>0.1.6.0</version>
+    <title>FiveLevelsOfMediaType</title>
+    <authors>Ali Kheyrollahi</authors>
+    <owners>Ali Kheyrollahi</owners>
+    <projectUrl>https://github.com/aliostad/FiveLevelsOfMediaType</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ASP.NET Web API Implementation of Five Levels of Media Type according to http://byterot.blogspot.co.uk/2012/12/5-levels-of-media-type-rest-csds.html</description>
+    <copyright>Copyright 2013</copyright>
+    <tags>aspnetwebapi http webapi MediaType FiveLevelsOfMediaType</tags>
+    <dependencies>
+      <dependency id="Microsoft.AspNet.WebApi.Core" version="5.0.0.0" />
+      <dependency id="AspNetWebApi.ApiActionSelector" version="0.2.0.0" />
+    </dependencies>
+  </metadata>
+</package>

@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCQRS", "SimpleCQRS\Si
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQRSGui", "CQRSGui\CQRSGui.csproj", "{13825284-2555-4594-B27F-92CE13D31FB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCQRS.Api", "SimpleCQRS.Api\SimpleCQRS.Api.csproj", "{D40982FD-5A0D-4097-B8C3-7FFCC6DD2A84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{13825284-2555-4594-B27F-92CE13D31FB3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{13825284-2555-4594-B27F-92CE13D31FB3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{13825284-2555-4594-B27F-92CE13D31FB3}.Release|x86.ActiveCfg = Release|Any CPU
+		{D40982FD-5A0D-4097-B8C3-7FFCC6DD2A84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D40982FD-5A0D-4097-B8C3-7FFCC6DD2A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D40982FD-5A0D-4097-B8C3-7FFCC6DD2A84}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D40982FD-5A0D-4097-B8C3-7FFCC6DD2A84}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D40982FD-5A0D-4097-B8C3-7FFCC6DD2A84}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D40982FD-5A0D-4097-B8C3-7FFCC6DD2A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D40982FD-5A0D-4097-B8C3-7FFCC6DD2A84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D40982FD-5A0D-4097-B8C3-7FFCC6DD2A84}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D40982FD-5A0D-4097-B8C3-7FFCC6DD2A84}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D40982FD-5A0D-4097-B8C3-7FFCC6DD2A84}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
