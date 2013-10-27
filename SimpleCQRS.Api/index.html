@@ -1,14 +1,50 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
-    <title></title>
+    <title>Simplest possible thing</title>
+    <link href="Content/Site.css" rel="stylesheet" />
+
 </head>
     <body>
+       <header>
+    <div class="content-wrapper">
+        <div class="float-left">
+            <p class="site-title">
+                <a href="">Simplest Possible Thingie</a></p>
+        </div>
+    </div>
+</header>
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>Welcome to CQRS + REST!</h1>
+                <h2>While in CQRS commands and queries live in disparate systems, they will be represented as a unified resource at the API Layer.</h2>
+            </hgroup>
+            <p>
+                ASP.NET Web API allows you to expose your applications, data and services to the
+                web directly over HTTP.
+            </p>
+            <p>
+                To learn more about ASP.NET Web API visit
+                <a href="http://go.microsoft.com/fwlink/?LinkID=238195" title="ASP.NET Web API Website">http://asp.net/web-api</a>.
+                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET Web API.
+                If you have any questions about ASP.NET Web API, visit
+                <a href="http://go.microsoft.com/fwlink/?LinkID=238196" title="ASP.NET Web API Forum">our forums</a>.
+            </p>
+        </div>
+    </section>
         <script src="Scripts/jquery-1.9.1.js"></script>
         <script src="Scripts/jquery-5lmt.js"></script>
-        <input type="button" id="a" value="Ali"/>
-        <p id="target">iof aoi aosdjf asdoifj sdi</p>
-        <div id="av"> oasd == asid sia a</div>
-        <script src="Scripts/sample.js"></script>
+        <script src="Scripts/angular.js"></script>
+        <script src="Scripts/inventory-item.js"></script>
+
+    <section class="content-wrapper main-content clear-fix">
+        <div ng-app="cqrsSample">
+             <div ng-view></div>
+        </div>
+
+    </section>
+</div>
     </body>
 </html>

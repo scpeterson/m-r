@@ -14,6 +14,7 @@ namespace SimpleCQRS.Api.App_Start
         {
             // ignore
             routes.IgnoreRoute("{file}.js");
+            routes.IgnoreRoute("{file}.html");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 

@@ -17,25 +17,25 @@ namespace SimpleCQRS.Api.Controllers
             _readmodel = new ReadModelFacade();
         }
 
-        public void Post(CreateInventoryItem createInventoryItem)
-        {
-            _bus.Send(createInventoryItem);
-        }
+        //public void Post(CreateInventoryItem createInventoryItem)
+        //{
+        //    _bus.Send(createInventoryItem);
+        //}
 
-        public void Put(DeactivateInventoryItem deactivateInventoryItem)
-        {
-            _bus.Send(deactivateInventoryItem);
-        }
+        //public void Put(DeactivateInventoryItem deactivateInventoryItem)
+        //{
+        //    _bus.Send(deactivateInventoryItem);
+        //}
 
-        public void Put(CheckInItemsToInventory checkInItemsToInventory)
-        {
-            _bus.Send(checkInItemsToInventory);
-        }
+        //public void Put(CheckInItemsToInventory checkInItemsToInventory)
+        //{
+        //    _bus.Send(checkInItemsToInventory);
+        //}
 
-        public void Put(RemoveItemsFromInventory removeItemsFromInventory)
-        {
-            _bus.Send(removeItemsFromInventory);
-        }
+        //public void Put(RemoveItemsFromInventory removeItemsFromInventory)
+        //{
+        //    _bus.Send(removeItemsFromInventory);
+        //}
 
 
         public IEnumerable<InventoryItemListDto> GetInventoryItems()

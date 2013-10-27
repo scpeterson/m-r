@@ -2,8 +2,8 @@
 #ignore thumbnails created by windows
 Thumbs.db
 #Ignore files build by Visual Studio
+*ncrunch*
 *.obj
-*.exe
 *.pdb
 *.user
 *.aps
@@ -19,6 +19,7 @@ Thumbs.db
 *.cache
 *.ilk
 *.log
+*.ncrunch*
 [Bb]in
 [Dd]ebug*/
 *.lib
@@ -27,3 +28,10 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
+build/
+deploy/
+docs/
+nuget/
+packages/
+artifacts/
+script.sql

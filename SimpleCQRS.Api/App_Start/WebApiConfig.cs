@@ -22,4 +22,6 @@ namespace SimpleCQRS.Api.App_Start
 
         }
     }
+
+
 }
