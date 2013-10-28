@@ -47,7 +47,10 @@ function InventoryItem(data) {
         this.id = guid();
         this.count = 0;
     } else {
-        $.extend(this, data);       
+        // $.extend(this, data);  
+        this.name = data.Name;
+        this.id = data.Id;
+        this.count = data.Count;
     }  
     
 }
