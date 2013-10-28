@@ -43,7 +43,7 @@
             }
             else {
                 contentType = constants.forms;
-                data = $.params(settings.data);
+                data = $.param(settings.data);
             }
 
             // set header and data

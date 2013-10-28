@@ -18,13 +18,56 @@ angular.module('cqrsSample', []).
   });
 
 function allInventoryItems(cqrsUrl) {
+
+    var inventoryItems = [];
+
     console.log("started!");
-    $.ajax({ url: cqrsUrl, async : false }).done(function() {
-        console.log("done!");
+    $.ajax({ url: cqrsUrl, async : false }).done(function(data, xhr) {
+        for (var i = 0; i < data.length; i++) {
+            inventoryItems.push(new InventoryItem(data[i]));
+        }
     });
     console.log("last!");
+
+    inventoryItems.add = function ($scope) {
+        
+        var command = new CreateInventoryItem($scope.name);
+
+        $.ajax({ url: cqrsUrl, type: "POST", data: command, dataType: "json" });
+
+    };
+
+    return inventoryItems;
 }
 
+function InventoryItem(data) {
+    
+    if (typeof data === "string") {
+        this.name = data;
+        this.id = guid();
+        this.count = 0;
+    } else {
+        $.extend(this, data);       
+    }  
+    
+}
+
+function CreateInventoryItem(name) {
+    this.name = name;
+    this.id = guid();
+}
+
+
+function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+               .toString(16)
+               .substring(1);
+};
+
+function guid() {
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+           s4() + '-' + s4() + s4() + s4();
+}
 
 function ListCtrl($scope, InventoryItems) {
     $scope.inventoryItems = InventoryItems;
