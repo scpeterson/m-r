@@ -17,9 +17,12 @@ namespace SimpleCQRS.Api.Controllers
             _readmodel = new ReadModelFacade();
         }
 
-        public void Post(CreateInventoryItem createInventoryItem)
+        public void Post(SimpleCQRS.Api.PublicDomain.CreateInventoryItem createInventoryItem)
         {
-            _bus.Send(createInventoryItem);
+            if (!createInventoryItem.Id.HasValue)
+                createInventoryItem.Id = Guid.NewGuid();
+
+            _bus.Send(new CreateInventoryItem(createInventoryItem.Id.Value, createInventoryItem.Name));
         }
 
         public void Put(DeactivateInventoryItem deactivateInventoryItem)
