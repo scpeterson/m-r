@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using SimpleCQRS.Api.PublicDomain;
 
 namespace SimpleCQRS.Api.Controllers
 {
@@ -17,7 +18,7 @@ namespace SimpleCQRS.Api.Controllers
             _readmodel = new ReadModelFacade();
         }
 
-        public void Post(SimpleCQRS.Api.PublicDomain.CreateInventoryItem createInventoryItem)
+        public void Post(CreateInventoryItemCommand createInventoryItem)
         {
             if (!createInventoryItem.Id.HasValue)
                 createInventoryItem.Id = Guid.NewGuid();
@@ -25,19 +26,24 @@ namespace SimpleCQRS.Api.Controllers
             _bus.Send(new CreateInventoryItem(createInventoryItem.Id.Value, createInventoryItem.Name));
         }
 
-        public void Put(DeactivateInventoryItem deactivateInventoryItem)
+        public void Put(DeactivateInventoryItemCommand deactivateInventoryItem)
         {
-            _bus.Send(deactivateInventoryItem);
+            _bus.Send(new DeactivateInventoryItem(deactivateInventoryItem.Id, 
+                Convert.ToInt32(deactivateInventoryItem.ConcurrencyVersion)));
         }
 
-        public void Put(CheckInItemsToInventory checkInItemsToInventory)
+        public void Put(CheckInItemsToInventoryCommand checkInItemsToInventory)
         {
-            _bus.Send(checkInItemsToInventory);
+            _bus.Send(new CheckInItemsToInventory(checkInItemsToInventory.Id, 
+                checkInItemsToInventory.Count
+                ));
         }
 
-        public void Put(RemoveItemsFromInventory removeItemsFromInventory)
+        public void Put(RemoveItemsFromInventoryCommand removeItemsFromInventory)
         {
-            _bus.Send(removeItemsFromInventory);
+
+            _bus.Send(new RemoveItemsFromInventory(removeItemsFromInventory.Id,
+                removeItemsFromInventory.Count));
         }
 
 

@@ -145,13 +145,15 @@
   <ItemGroup>
     <Compile Include="App_Start\MvcConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Concurrency\IConcurrencyAware.cs" />
+    <Compile Include="Concurrency\ConcurrencyAwareFilter.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryItemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PublicDomain\CreateInventoryItemCommand.cs" />
+    <Compile Include="PublicDomain\Commands.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -6,6 +6,7 @@ using System.Web.Http;
 using FiveLevelsOfMediaType;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using SimpleCQRS.Api.Concurrency;
 
 namespace SimpleCQRS.Api.App_Start
 {
@@ -26,6 +27,7 @@ namespace SimpleCQRS.Api.App_Start
 
             config.AddFiveLevelsOfMediaType();
 
+            config.Filters.Add(new ConcurrencyAwareFilter());
         }
     }
 

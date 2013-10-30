@@ -72,7 +72,7 @@ namespace CQRSGui.Controllers
         [HttpPost]
         public ActionResult CheckIn(Guid id, int number, int version)
         {
-            _bus.Send(new CheckInItemsToInventory(id, number, version));
+            _bus.Send(new CheckInItemsToInventory(id, number));
             return RedirectToAction("Index");
         }
 
@@ -85,7 +85,7 @@ namespace CQRSGui.Controllers
         [HttpPost]
         public ActionResult Remove(Guid id, int number, int version)
         {
-            _bus.Send(new RemoveItemsFromInventory(id, number, version));
+            _bus.Send(new RemoveItemsFromInventory(id, number));
             return RedirectToAction("Index");
         }
     }

@@ -6,7 +6,7 @@ namespace SimpleCQRS
 {
     public interface IEventStore
     {
-        void SaveEvents(Guid aggregateId, IEnumerable<Event> events, int expectedVersion);
+        void SaveEvents(Guid aggregateId, IEnumerable<Event> events, int? expectedVersion);
         List<Event> GetEventsForAggregate(Guid aggregateId);
     }
 
@@ -36,7 +36,7 @@ namespace SimpleCQRS
 
         private readonly Dictionary<Guid, List<EventDescriptor>> _current = new Dictionary<Guid, List<EventDescriptor>>(); 
         
-        public void SaveEvents(Guid aggregateId, IEnumerable<Event> events, int expectedVersion)
+        public void SaveEvents(Guid aggregateId, IEnumerable<Event> events, int? expectedVersion)
         {
             List<EventDescriptor> eventDescriptors;
             if(!_current.TryGetValue(aggregateId, out eventDescriptors))
@@ -44,11 +44,12 @@ namespace SimpleCQRS
                 eventDescriptors = new List<EventDescriptor>();
                 _current.Add(aggregateId,eventDescriptors);
             }
-            else if(eventDescriptors[eventDescriptors.Count - 1].Version != expectedVersion && expectedVersion != -1)
+            else if(expectedVersion!= null && 
+                eventDescriptors[eventDescriptors.Count - 1].Version != expectedVersion)
             {
                 throw new ConcurrencyException();
             }
-            var i = expectedVersion;
+            var i = eventDescriptors[eventDescriptors.Count - 1].Version;
             foreach (var @event in events)
             {
                 i++;

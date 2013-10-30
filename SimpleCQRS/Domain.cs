@@ -96,7 +96,7 @@ namespace SimpleCQRS
 
     public interface IRepository<T> where T : AggregateRoot, new()
     {
-        void Save(AggregateRoot aggregate, int expectedVersion);
+        void Save(AggregateRoot aggregate, int? expectedVersion);
         T GetById(Guid id);
     }
 
@@ -109,7 +109,7 @@ namespace SimpleCQRS
             _storage = storage;
         }
 
-        public void Save(AggregateRoot aggregate, int expectedVersion)
+        public void Save(AggregateRoot aggregate, int? expectedVersion)
         {
             _storage.SaveEvents(aggregate.Id, aggregate.GetUncommittedChanges(), expectedVersion);
         }

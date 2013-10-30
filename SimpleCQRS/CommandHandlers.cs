@@ -12,7 +12,7 @@ namespace SimpleCQRS
         public void Handle(CreateInventoryItem message)
         {
             var item = new InventoryItem(message.InventoryItemId, message.Name);
-            _repository.Save(item, -1);
+            _repository.Save(item, null);
         }
         public void Handle(DeactivateInventoryItem message)
         {
@@ -24,13 +24,13 @@ namespace SimpleCQRS
         {
             var item = _repository.GetById(message.InventoryItemId);
             item.Remove(message.Count);
-            _repository.Save(item, message.OriginalVersion);
+            _repository.Save(item, null);
         }
         public void Handle(CheckInItemsToInventory message)
         {
             var item = _repository.GetById(message.InventoryItemId);
             item.CheckIn(message.Count);
-            _repository.Save(item, message.OriginalVersion);
+            _repository.Save(item, null);
         }
         public void Handle(RenameInventoryItem message)
         {
