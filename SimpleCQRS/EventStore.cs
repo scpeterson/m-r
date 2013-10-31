@@ -49,7 +49,9 @@ namespace SimpleCQRS
             {
                 throw new ConcurrencyException();
             }
-            var i = eventDescriptors[eventDescriptors.Count - 1].Version;
+
+            var i = eventDescriptors.Count == 0 ? -1 :
+                eventDescriptors[eventDescriptors.Count - 1].Version;
             foreach (var @event in events)
             {
                 i++;
