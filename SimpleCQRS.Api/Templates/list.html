@@ -10,9 +10,9 @@
     <tbody>
         <tr ng-repeat="inventoryItem in inventoryItems | filter:search | orderBy:'name'">
             <td>{{inventoryItem.id}}</td>            
-            <td><a href="#/edit/{{inventoryItem.$id}}" target="_blank">{{inventoryItem.name}}</a></td>
+            <td><a href="#/edit/{{inventoryItem.id}}">{{inventoryItem.name}}</a></td>
             <td>
-                <a href="#/edit/{{inventoryItem.$id}}"><i class="icon-pencil"></i></a>
+                <a href="#/edit/{{inventoryItem.id}}"><i class="icon-pencil"></i></a>
             </td>
         </tr>
     </tbody>

@@ -73,19 +73,6 @@ function CreateInventoryItem(name) {
     this.name = name;
 }
 
-/*
-function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-               .toString(16)
-               .substring(1);
-};
-
-function guid() {
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-           s4() + '-' + s4() + s4() + s4();
-}
-*/
-
 function ListCtrl($scope, InventoryItems) {
     $scope.inventoryItems = InventoryItems;
 }
@@ -98,13 +85,13 @@ function CreateCtrl($scope, $location, $timeout, InventoryItems) {
     };
 }
 
-function EditCtrl($scope, $location, $routeParams, angularFire, fbURL) {
+function EditCtrl($scope, $location, $routeParams, angularFire, cqrsUrl) {
     angularFire(cqrsUrl + $routeParams.inventoryItemId, $scope, 'remote', {}).
     then(function () {
         $scope.inventoryItem = angular.copy($scope.remote);
         $scope.inventoryItem.$id = $routeParams.inventoryItemId;
         $scope.isClean = function () {
-            return angular.equals($scope.remote, $scope.project);
+            return angular.equals($scope.remote, $scope.inventoryItem);
         };
 
         $scope.destroy = function () {
@@ -113,7 +100,7 @@ function EditCtrl($scope, $location, $routeParams, angularFire, fbURL) {
         };
 
         $scope.save = function () {
-            $scope.remote = angular.copy($scope.project);
+            $scope.remote = angular.copy($scope.inventoryItem);
             $location.path(constants.paths.root);
         };
     });
