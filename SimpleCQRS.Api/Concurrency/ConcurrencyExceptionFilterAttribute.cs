@@ -6,9 +6,9 @@ using System.Web;
 using System.Web.Http.Filters;
 using System.Net.Http;
 
-namespace SimpleCQRS.Api
+namespace SimpleCQRS.Api.Concurrency
 {
-    public class CqrsExceptionFilterAttribute : ExceptionFilterAttribute 
+    public class ConcurrencyExceptionFilterAttribute : ExceptionFilterAttribute 
     {
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {

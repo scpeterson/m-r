@@ -112,7 +112,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\accent.png" />
@@ -134,13 +133,10 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\inventory-item.js" />
-    <Content Include="Scripts\jquery-1.9.1.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-5lmt.js" />
     <Content Include="Templates\detail.html" />
     <Content Include="Templates\list.html" />
     <Content Include="Web.config" />
-    <Content Include="Scripts\jquery-1.9.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\MvcConfig.cs" />
@@ -149,7 +145,7 @@
     <Compile Include="Concurrency\ConcurrencyAwareFilterAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryItemController.cs" />
-    <Compile Include="CqrsExceptionFilterAttribute.cs" />
+    <Compile Include="Concurrency\ConcurrencyExceptionFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
