@@ -11,10 +11,12 @@ namespace SimpleCQRS
 
     public class InventoryItemDetailsDto
     {
-        public Guid Id;
-        public string Name;
-        public int CurrentCount;
-        public int Version;
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public int CurrentCount { get; set; }
+
+        [ETagKey]
+        public int Version { get; set; }
 
         public InventoryItemDetailsDto(Guid id, string name, int currentCount, int version)
         {
@@ -108,8 +110,10 @@ namespace SimpleCQRS
         }
 
         public InventoryItemDetailsDto GetInventoryItemDetails(Guid id)
-        {
-            return BullShitDatabase.details[id];
+        {            
+            return BullShitDatabase.details.ContainsKey(id) ? 
+                BullShitDatabase.details[id] :
+                null;
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Http;
 using SimpleCQRS.Api.PublicDomain;
@@ -26,23 +27,42 @@ namespace SimpleCQRS.Api.Controllers
             _bus.Send(new CreateInventoryItem(createInventoryItem.Id.Value, createInventoryItem.Name));
         }
 
-        public void Put(DeactivateInventoryItemCommand deactivateInventoryItem)
+        public void Delete(Guid id, DeactivateInventoryItemCommand deactivateInventoryItem)
         {
-            _bus.Send(new DeactivateInventoryItem(deactivateInventoryItem.Id, 
-                Convert.ToInt32(deactivateInventoryItem.ConcurrencyVersion)));
+
+            int versionNumber = 0;
+            int? ver = int.TryParse(deactivateInventoryItem.ConcurrencyVersion, out versionNumber)
+                           ? (int?) versionNumber
+                           : null;
+
+            deactivateInventoryItem.Id = id;
+            _bus.Send(new DeactivateInventoryItem(deactivateInventoryItem.Id,
+                ver));
         }
 
-        public void Put(CheckInItemsToInventoryCommand checkInItemsToInventory)
+        public void Put(Guid id, RenameInventoryItemCommnad renameInventoryItemCommnad)
         {
-            _bus.Send(new CheckInItemsToInventory(checkInItemsToInventory.Id, 
+            int versionNumber = 0;
+            int? ver = int.TryParse(renameInventoryItemCommnad.ConcurrencyVersion, out versionNumber)
+                           ? (int?) versionNumber
+                           : null;
+
+            _bus.Send(new RenameInventoryItem(id,
+                renameInventoryItemCommnad.NewName, ver));
+        }
+
+
+        public void Post(Guid id, CheckInItemsToInventoryCommand checkInItemsToInventory)
+        {
+            _bus.Send(new CheckInItemsToInventory(id, 
                 checkInItemsToInventory.Count
                 ));
         }
 
-        public void Put(RemoveItemsFromInventoryCommand removeItemsFromInventory)
+        public void Post(Guid id, RemoveItemsFromInventoryCommand removeItemsFromInventory)
         {
 
-            _bus.Send(new RemoveItemsFromInventory(removeItemsFromInventory.Id,
+            _bus.Send(new RemoveItemsFromInventory(id,
                 removeItemsFromInventory.Count));
         }
 
@@ -52,9 +72,14 @@ namespace SimpleCQRS.Api.Controllers
             return _readmodel.GetInventoryItems();
         }
 
+  
         public InventoryItemDetailsDto GetInventoryItemDetails(Guid id)
         {
-            return _readmodel.GetInventoryItemDetails(id);
+            var detailsDto = _readmodel.GetInventoryItemDetails(id);
+            if (detailsDto == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            else
+                return detailsDto;
         }
     }
 }

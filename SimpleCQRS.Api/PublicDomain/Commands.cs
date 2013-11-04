@@ -18,7 +18,7 @@ namespace SimpleCQRS.Api.PublicDomain
         public string Name { get; set; }
     }
 
-    public class RenameInventoryItem : IConcurrencyAware
+    public class RenameInventoryItemCommnad : IConcurrencyAware
     {
         public Guid Id { get; set; }
         public string ConcurrencyVersion { get; set; }

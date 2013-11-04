@@ -2,15 +2,15 @@
 <table>
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Item</th>
+            <th style="min-width: 300px">Id</th>
+            <th style="min-width: 100px">Item</th>
             <th><a href="#/new"><i class="icon-plus-sign">new</i></a></th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="inventoryItem in inventoryItems | filter:search | orderBy:'name'">
-            <td>{{inventoryItem.id}}</td>            
-            <td><a href="#/edit/{{inventoryItem.id}}">{{inventoryItem.name}}</a></td>
+            <td style="min-width: 300px">{{inventoryItem.id}}</td>            
+            <td style="min-width: 100px"><a href="#/edit/{{inventoryItem.id}}">{{inventoryItem.name}}</a></td>
             <td>
                 <a href="#/edit/{{inventoryItem.id}}"><i class="icon-pencil"></i></a>
             </td>
