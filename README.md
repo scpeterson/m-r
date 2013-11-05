@@ -1,4 +1,4 @@
-m-r
+m-r *(RESTful)*
 ===
 
 This prototype exposes Greg Young's [m-r sample](https://github.com/gregoryyoung/m-r) - which has arguably been the de-facto **CRQS + ES** (ES = Event Sourcing) sample in the community - through a **RESTful interface**. While in **CQRS** commands and queries live in disparate systems, they will be represented as a unified resource at the API Layer.
