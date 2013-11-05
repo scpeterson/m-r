@@ -14,12 +14,7 @@ var constants = {
 };
 
 angular.module('cqrsSample', []).
-    value('cqrsUrl', 'http://localhost:34543/api/InventoryItem').
-    /*
-    factory('InventoryItems', function (cqrsUrl) {
-        return allInventoryItems(cqrsUrl);
-    }).
-    */
+    value('cqrsUrl', document.URL.substring(0, document.URL.indexOf("index.html")) + "api/InventoryItem").
     config(function($routeProvider) {
         $routeProvider.
             when(constants.paths.root, { controller: ListCtrl, templateUrl: 'templates/list.html' }).

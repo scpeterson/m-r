@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -16,6 +18,18 @@ namespace SimpleCQRS.Api.Concurrency
     public class ConcurrencyAwareFilterAttribute : ActionFilterAttribute
     {
 
+        public ConcurrencyAwareFilterAttribute()
+            : this(0, false)
+        {
+
+        }
+
+        public ConcurrencyAwareFilterAttribute(int maxAgeInSeconds, bool isPublic)
+        {
+            _isPublic = isPublic;
+            _maxAgeInSeconds = maxAgeInSeconds;
+        }
+
         // Disclaimer: this is not recommended secure encryption. Just for demo purposes
         private static byte[] IV = new byte[] { 
             134, 209, 1, 34, 108, 89, 23, 42 ,
@@ -28,16 +42,18 @@ namespace SimpleCQRS.Api.Concurrency
             134, 209, 1, 34, 108, 19, 23, 42
         };
 
+        private int _maxAgeInSeconds;
+        private bool _isPublic;
 
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-             // only for PUT where if-match header contains a value
-            if(actionContext.Request.Method.Method != HttpMethod.Put.Method ||
+            // only for PUT where if-match header contains a value
+            if (actionContext.Request.Method.Method != HttpMethod.Put.Method ||
                 actionContext.Request.Headers.IfMatch == null ||
                 actionContext.Request.Headers.IfMatch.Count == 0)
 
                 return;
-            
+
 
             foreach (var aa in actionContext.ActionArguments.Values)
             {
@@ -68,19 +84,22 @@ namespace SimpleCQRS.Api.Concurrency
         // Adding ETag
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
+
             base.OnActionExecuted(actionExecutedContext);
 
-
+            // ONLY GET
             if (actionExecutedContext.Request.Method.Method.Equals(HttpMethod.Get.Method) &&
                 actionExecutedContext.Response.Content != null &&
                 actionExecutedContext.Response.Headers.ETag == null)
             {
+                string eTag = null;
                 var objectContent = actionExecutedContext.Response.Content as ObjectContent;
                 if (objectContent != null)
                 {
                     var propertyInfo = objectContent.ObjectType
-                        .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                        .FirstOrDefault(x => x.GetCustomAttributes<ETagKeyAttribute>().Count() > 0);
+                                                    .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                                                    .FirstOrDefault(
+                                                        x => x.GetCustomAttributes<ETagKeyAttribute>().Count() > 0);
 
                     if (propertyInfo != null)
                     {
@@ -88,13 +107,44 @@ namespace SimpleCQRS.Api.Concurrency
                         if (etag != null)
                         {
                             var eTagString = Encrypt(etag.ToString());
-                            actionExecutedContext.Response.Headers.ETag =
-                                new EntityTagHeaderValue("\"" + eTagString + "\"");
-
+                            eTag = "\"" + eTagString + "\"";
                         }
                     }
                 }
+
+                if (eTag != null)
+                {
+                    SetEtagAndCacheControlHeader(actionExecutedContext, eTag, _maxAgeInSeconds, _isPublic);
+                }
             }
+
+        }
+
+        private void SetEtagAndCacheControlHeader(HttpActionExecutedContext context,
+                                                  string eTag, int maxAge, bool isPublic)
+        {
+            var url = context.Request.RequestUri.PathAndQuery;
+
+
+            // return not modified for conditional GET
+            if (context.Request.Headers.IfNoneMatch != null &&
+                context.Request.Headers.IfNoneMatch.Any(etgh =>
+                etgh.Tag == eTag))
+            {
+                context.Response = context.Request.CreateResponse(HttpStatusCode.NotModified);
+                context.Response.Headers.ETag = new EntityTagHeaderValue(eTag);
+                return; // EXIT !!
+            }
+
+
+            context.Response.Headers.ETag = new EntityTagHeaderValue(eTag);
+            context.Response.Headers.CacheControl =
+                new CacheControlHeaderValue()
+                {
+                    MaxAge = TimeSpan.FromSeconds(maxAge),
+                    Private = !isPublic
+                };
+
         }
 
         private static string Decrypt(string base64)

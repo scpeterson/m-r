@@ -23,15 +23,55 @@
                 <h2>While in CQRS commands and queries live in disparate systems, they will be represented as a unified resource at the API Layer.</h2>
             </hgroup>
             <p>
-                ASP.NET Web API allows you to expose your applications, data and services to the
-                web directly over HTTP.
+                This prototype exposes Greg Young's <a href="https://github.com/gregoryyoung/m-r">m-r</a> sample
+                - which has been the de-facto CRQS+ES (ES = Event Sourcing) sample in the community - through a
+                RESTful interface.
             </p>
             <p>
-                To learn more about ASP.NET Web API visit
-                <a href="http://go.microsoft.com/fwlink/?LinkID=238195" title="ASP.NET Web API Website">http://asp.net/web-api</a>.
-                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET Web API.
-                If you have any questions about ASP.NET Web API, visit
-                <a href="http://go.microsoft.com/fwlink/?LinkID=238196" title="ASP.NET Web API Forum">our forums</a>.
+                This prototype exemplifies:
+                <ul>
+                    <li>Forming the API's Public Domain abstracing Server/BoundedCountext's internal domain. 
+                        Public domain is composed of DTOs and separate commands.
+                    </li>
+                    <li>
+                        Service has been exposed as resources. Resource accept GET, POST, 
+                        DELETE and PUT requests - currently OPTIONS is not implemented. 
+                        <ul>
+                            <li><pre>GET /api/InventoryItem</pre>  [gets all items]</span></li>
+                            <li><pre>GET /api/InventoryItem/{id}</pre> [gets detail of a single item]</li>
+                            <li><pre>POST /api/InventoryItem</pre> [creates an item]</li>
+                            <li><pre>POST /api/InventoryItem/{id}</pre>* [checks in stock items to the inventory]</li>
+                            <li><pre>POST /api/InventoryItem/{id}</pre>* [removes stock items from the inventory]</li>
+                            <li><pre>PUT /api/InventoryItem/{id}</pre> [renames an item]</li>
+                            <li><pre>DELETE /api/InventoryItem/{id}</pre> [de-activates an item]</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Operations marked with the * above require passing the command type as described
+                        by the <a href="http://byterot.blogspot.co.uk/2012/12/5-levels-of-media-type-rest-csds.html">5 levels of media type.</a> 
+                        This helps to avoid RPC-style URLs where a verb is defined on the top of
+                        a resource: so instead of <pre>/api/InventoryItem/{id}/AddToStock</pre>, we send a request with 
+                        media type <pre>application/json;domain-model=CheckInItemsToInventoryCommand</pre>. This also
+                        moves away from the common misconception that HTTP Verbs must be mapped to CRUD.
+                    </li>
+                    <li>
+                        Exposing ES concurrency through HTTP's ETag and If-Match and If-None-Match 
+                        conditional PUT and GET requests. 
+                    </li>
+                    <li>
+                        Enabling caching on the top of single resources and returning 304 for resources that
+                        are not modified. Also returning 412 (PreconditionFailed) on unsuccessful If-Match
+                        conditional PUT calls.
+                    </li>
+                    <li>
+                        As per <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.11">RFC 2616</a>, ETag has been opacified so that the client cannot guess the values -
+                        this would have been possible if we had exposed version numbers directly. 
+                    </li>
+                    <li>
+                        Other HTTP-level semantics such as status codes, populating <pre>Location</pre> header
+                        after POST, etc.
+                    </li>
+                </ul>
             </p>
         </div>
     </section>

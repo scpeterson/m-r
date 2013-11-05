@@ -90,6 +90,10 @@ h5, h6 {
         text-decoration: none;
     }
 
+pre {
+    display: inline
+}
+
 
 /* main layout
 ----------------------------------------------------------*/
@@ -124,6 +128,8 @@ footer {
     font-size: .8em;
     height: 100px;
 }
+
+
 
 
 /* site title
@@ -175,6 +181,7 @@ footer {
         display: inline;
         list-style: none;
     }
+
 
 
 /* menu
