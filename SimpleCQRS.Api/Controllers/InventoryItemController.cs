@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using SimpleCQRS.Api.PublicDomain;
@@ -19,15 +20,20 @@ namespace SimpleCQRS.Api.Controllers
             _readmodel = new ReadModelFacade();
         }
 
-        public void Post(CreateInventoryItemCommand createInventoryItem)
+        public HttpResponseMessage Post(CreateInventoryItemCommand createInventoryItem)
         {
             if (!createInventoryItem.Id.HasValue)
                 createInventoryItem.Id = Guid.NewGuid();
 
             _bus.Send(new CreateInventoryItem(createInventoryItem.Id.Value, createInventoryItem.Name));
+            var response = Request.CreateResponse(HttpStatusCode.Accepted);
+            response.Headers.Location = new Uri(
+                new Uri(Request.RequestUri.ToString().TrimEnd('/') + "/"), 
+                createInventoryItem.Id.ToString());
+            return response;
         }
 
-        public void Delete(Guid id, DeactivateInventoryItemCommand deactivateInventoryItem)
+        public HttpResponseMessage Delete(Guid id, DeactivateInventoryItemCommand deactivateInventoryItem)
         {
 
             int versionNumber = 0;
@@ -38,9 +44,11 @@ namespace SimpleCQRS.Api.Controllers
             deactivateInventoryItem.Id = id;
             _bus.Send(new DeactivateInventoryItem(deactivateInventoryItem.Id,
                 ver));
+
+            return Request.CreateResponse(HttpStatusCode.Accepted);
         }
 
-        public void Put(Guid id, RenameInventoryItemCommnad renameInventoryItemCommnad)
+        public HttpResponseMessage Put(Guid id, RenameInventoryItemCommnad renameInventoryItemCommnad)
         {
             int versionNumber = 0;
             int? ver = int.TryParse(renameInventoryItemCommnad.ConcurrencyVersion, out versionNumber)
@@ -49,21 +57,30 @@ namespace SimpleCQRS.Api.Controllers
 
             _bus.Send(new RenameInventoryItem(id,
                 renameInventoryItemCommnad.NewName, ver));
+
+            return Request.CreateResponse(HttpStatusCode.Accepted);
+
         }
 
 
-        public void Post(Guid id, CheckInItemsToInventoryCommand checkInItemsToInventory)
+        public HttpResponseMessage Post(Guid id, CheckInItemsToInventoryCommand checkInItemsToInventory)
         {
             _bus.Send(new CheckInItemsToInventory(id, 
                 checkInItemsToInventory.Count
                 ));
+
+            return Request.CreateResponse(HttpStatusCode.Accepted);
+
         }
 
-        public void Post(Guid id, RemoveItemsFromInventoryCommand removeItemsFromInventory)
+        public HttpResponseMessage Post(Guid id, RemoveItemsFromInventoryCommand removeItemsFromInventory)
         {
 
             _bus.Send(new RemoveItemsFromInventory(id,
                 removeItemsFromInventory.Count));
+
+            return Request.CreateResponse(HttpStatusCode.Accepted);
+
         }
 
 
