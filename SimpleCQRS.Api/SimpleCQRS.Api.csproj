@@ -146,11 +146,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryItemController.cs" />
     <Compile Include="Concurrency\ConcurrencyExceptionFilterAttribute.cs" />
+    <Compile Include="Controllers\InventoryItemListDtoCollection.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublicDomain\Commands.cs" />
+    <Compile Include="PublicDomain\ReadModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

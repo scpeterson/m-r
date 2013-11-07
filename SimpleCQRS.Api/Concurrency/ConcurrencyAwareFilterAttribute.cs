@@ -96,17 +96,13 @@ namespace SimpleCQRS.Api.Concurrency
                 var objectContent = actionExecutedContext.Response.Content as ObjectContent;
                 if (objectContent != null)
                 {
-                    var propertyInfo = objectContent.ObjectType
-                                                    .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                                                    .FirstOrDefault(
-                                                        x => x.GetCustomAttributes<ETagKeyAttribute>().Count() > 0);
+                    var concurrencyAware = objectContent.Value as IConcurrencyAware;
 
-                    if (propertyInfo != null)
+                    if (concurrencyAware != null)
                     {
-                        var etag = propertyInfo.GetGetMethod().Invoke(objectContent.Value, null);
-                        if (etag != null)
+                        if (concurrencyAware.ConcurrencyVersion != null)
                         {
-                            var eTagString = Encrypt(etag.ToString());
+                            var eTagString = Encrypt(concurrencyAware.ConcurrencyVersion);
                             eTag = "\"" + eTagString + "\"";
                         }
                     }

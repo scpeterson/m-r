@@ -9,7 +9,7 @@ using SimpleCQRS.Api.PublicDomain;
 
 namespace SimpleCQRS.Api.Controllers
 {
-    public class InventoryItemController : ApiController, IReadModelFacade
+    public class InventoryItemController : ApiController
     {
         private FakeBus _bus;
         private ReadModelFacade _readmodel;
@@ -84,19 +84,20 @@ namespace SimpleCQRS.Api.Controllers
         }
 
 
-        public IEnumerable<InventoryItemListDto> GetInventoryItems()
+        public InventoryItemListDataCollection GetInventoryItems()
         {
-            return _readmodel.GetInventoryItems();
+            return new InventoryItemListDataCollection(_readmodel.GetInventoryItems());
         }
 
   
-        public InventoryItemDetailsDto GetInventoryItemDetails(Guid id)
+        public InventoryItemDetail GetInventoryItemDetails(Guid id)
         {
             var detailsDto = _readmodel.GetInventoryItemDetails(id);
             if (detailsDto == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             else
-                return detailsDto;
+                return new InventoryItemDetail(detailsDto.Id, detailsDto.Name, 
+                    detailsDto.CurrentCount, detailsDto.Version);
         }
     }
 }

@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="CommandHandlers.cs" />
     <Compile Include="Domain.cs" />
-    <Compile Include="ETagKeyAttribute.cs" />
     <Compile Include="EventStore.cs" />
     <Compile Include="FakeBus.cs" />
     <Compile Include="InfrastructureCrap.DontBotherReadingItsNotImportant.cs" />

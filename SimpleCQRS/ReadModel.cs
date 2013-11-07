@@ -15,7 +15,6 @@ namespace SimpleCQRS
         public string Name { get; set; }
         public int CurrentCount { get; set; }
 
-        [ETagKey]
         public int Version { get; set; }
 
         public InventoryItemDetailsDto(Guid id, string name, int currentCount, int version)
