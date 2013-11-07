@@ -59,6 +59,7 @@ namespace SimpleCQRS.Api.PublicDomain
                 foreach (var item in this)
                 {
                     builder.Append(item.Id.ToString());
+                    builder.Append(item.Name);
                 }
                 using (var md5 = new MD5CryptoServiceProvider()) // MD5 is enough no need for SHA1
                 {
