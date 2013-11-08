@@ -28,7 +28,7 @@ namespace SimpleCQRS.Api.Controllers
             _bus.Send(new CreateInventoryItem(createInventoryItem.Id.Value, createInventoryItem.Name));
             var response = Request.CreateResponse(HttpStatusCode.Accepted);
             response.Headers.Location = new Uri(
-                new Uri(Request.RequestUri.ToString().TrimEnd('/') + "/"), 
+                new Uri(Request.RequestUri.ToString().TrimEnd('/') + "/"),
                 createInventoryItem.Id.ToString());
             return response;
         }
@@ -43,7 +43,7 @@ namespace SimpleCQRS.Api.Controllers
 
             deactivateInventoryItem.Id = id;
             _bus.Send(new DeactivateInventoryItem(deactivateInventoryItem.Id,
-                ver));
+                                                  ver));
 
             return Request.CreateResponse(HttpStatusCode.Accepted);
         }
@@ -56,7 +56,7 @@ namespace SimpleCQRS.Api.Controllers
                            : null;
 
             _bus.Send(new RenameInventoryItem(id,
-                renameInventoryItemCommnad.NewName, ver));
+                                              renameInventoryItemCommnad.NewName, ver));
 
             return Request.CreateResponse(HttpStatusCode.Accepted);
 
@@ -65,9 +65,9 @@ namespace SimpleCQRS.Api.Controllers
 
         public HttpResponseMessage Post(Guid id, CheckInItemsToInventoryCommand checkInItemsToInventory)
         {
-            _bus.Send(new CheckInItemsToInventory(id, 
-                checkInItemsToInventory.Count
-                ));
+            _bus.Send(new CheckInItemsToInventory(id,
+                                                  checkInItemsToInventory.Count
+                          ));
 
             return Request.CreateResponse(HttpStatusCode.Accepted);
 
@@ -77,27 +77,43 @@ namespace SimpleCQRS.Api.Controllers
         {
 
             _bus.Send(new RemoveItemsFromInventory(id,
-                removeItemsFromInventory.Count));
+                                                   removeItemsFromInventory.Count));
 
             return Request.CreateResponse(HttpStatusCode.Accepted);
 
         }
 
-
+        [AcceptVerbs("GET", "HEAD")]
         public InventoryItemListDataCollection GetInventoryItems()
         {
             return new InventoryItemListDataCollection(_readmodel.GetInventoryItems());
         }
 
-  
+        [AcceptVerbs("GET", "HEAD")]
         public InventoryItemDetail GetInventoryItemDetails(Guid id)
         {
             var detailsDto = _readmodel.GetInventoryItemDetails(id);
             if (detailsDto == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             else
-                return new InventoryItemDetail(detailsDto.Id, detailsDto.Name, 
-                    detailsDto.CurrentCount, detailsDto.Version);
+                return new InventoryItemDetail(detailsDto.Id, detailsDto.Name,
+                                               detailsDto.CurrentCount, detailsDto.Version);
+        }
+
+        public HttpResponseMessage Options()
+        {
+            var methods = new[] {"GET", "POST", "OPTIONS", "HEAD"};
+            var response = Request.CreateResponse(HttpStatusCode.OK, methods);
+            response.Content.Headers.Add("Allow", string.Join(",", methods));
+            return response;
+        }
+
+        public HttpResponseMessage Options(Guid id)
+        {
+            var methods = new[] {"GET", "POST", "OPTIONS", "HEAD", "DELETE", "PUT"};
+            var response = Request.CreateResponse(HttpStatusCode.OK, methods);
+            response.Content.Headers.Add("Allow", string.Join(",", methods));
+            return response;
         }
     }
 }

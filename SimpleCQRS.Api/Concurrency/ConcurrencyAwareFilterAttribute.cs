@@ -88,7 +88,9 @@ namespace SimpleCQRS.Api.Concurrency
             base.OnActionExecuted(actionExecutedContext);
 
             // ONLY GET
-            if (actionExecutedContext.Request.Method.Method.Equals(HttpMethod.Get.Method) &&
+            if (
+                (actionExecutedContext.Request.Method.Method.Equals(HttpMethod.Get.Method)
+                || actionExecutedContext.Request.Method.Method.Equals(HttpMethod.Head.Method)) &&
                 actionExecutedContext.Response.Content != null &&
                 actionExecutedContext.Response.Headers.ETag == null)
             {
@@ -119,10 +121,8 @@ namespace SimpleCQRS.Api.Concurrency
         private void SetEtagAndCacheControlHeader(HttpActionExecutedContext context,
                                                   string eTag, int maxAge, bool isPublic)
         {
-            var url = context.Request.RequestUri.PathAndQuery;
 
-
-            // return not modified for conditional GET
+            // return not modified for conditional GET and HEAD
             if (context.Request.Headers.IfNoneMatch != null &&
                 context.Request.Headers.IfNoneMatch.Any(etgh =>
                 etgh.Tag == eTag))

@@ -27,6 +27,7 @@ namespace SimpleCQRS.Api.App_Start
 
             config.AddFiveLevelsOfMediaType();
 
+
             config.Filters.Add(new ConcurrencyAwareFilterAttribute());
             config.Filters.Add(new ConcurrencyExceptionFilterAttribute());
 
