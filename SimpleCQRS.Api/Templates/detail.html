@@ -15,6 +15,7 @@
     <button ng-click="save()" ng-disabled="isClean() || myForm.$invalid" class="btn btn-primary">{{createRenameLabel}}</button>
     <button ng-click="deactivate()" ng-show="inventoryItem.id" class="btn btn-danger">De-Activate</button>
     
+   <span ng-bind="error" class="help-inline"></span>
 
     <hr ng-show="inventoryItem.id"/>
     

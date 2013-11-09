@@ -89,6 +89,8 @@ function ListCtrl($scope, $http, cqrsUrl) {
     })
     .then(function(data) {
         $scope.inventoryItems = data.data;
+    }, function (reason) {
+        $scope.error = "Failed with status " + reason.status;
     });
     
 }
@@ -105,6 +107,8 @@ function CreateCtrl($scope, $location, $timeout, $http, cqrsUrl) {
         })
         .then(function() {
             $location.path(constants.paths.root);
+        }, function (reason) {
+            $scope.error = "Failed with status " + reason.status;
         });
 
     };
@@ -134,6 +138,8 @@ function EditCtrl($scope, $location, $http, $routeParams, cqrsUrl) {
                 })
                     .then(function() {
                         $location.path(constants.paths.root);
+                    }, function (reason) {
+                        $scope.error = "Failed with status " + reason.status;
                     });
 
             };
@@ -146,8 +152,11 @@ function EditCtrl($scope, $location, $http, $routeParams, cqrsUrl) {
                     url: cqrsUrl + "/" + $routeParams.inventoryItemId,
                     $scope: $scope
                 })
-                   .then(function () {
+                   .then(
+                       function () {
                        $location.path(constants.paths.root);
+                   }, function(reason) {
+                       $scope.error = "Failed with status " + reason.status;
                    });
 
             };
@@ -160,6 +169,8 @@ function EditCtrl($scope, $location, $http, $routeParams, cqrsUrl) {
                 })
                   .then(function () {
                       $location.path(constants.paths.root);
+                  }, function (reason) {
+                      $scope.error = "Failed with status " + reason.status;
                   });
             };
             
@@ -171,6 +182,8 @@ function EditCtrl($scope, $location, $http, $routeParams, cqrsUrl) {
                 })
                   .then(function () {
                       $location.path(constants.paths.root);
+                  }, function (reason) {
+                      $scope.error = "Failed with status " + reason.status;
                   });
             };
 
