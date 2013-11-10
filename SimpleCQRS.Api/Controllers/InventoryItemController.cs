@@ -48,15 +48,15 @@ namespace SimpleCQRS.Api.Controllers
             return Request.CreateResponse(HttpStatusCode.Accepted);
         }
 
-        public HttpResponseMessage Put(Guid id, RenameInventoryItemCommnad renameInventoryItemCommnad)
+        public HttpResponseMessage Put(Guid id, RenameInventoryItemCommand renameInventoryItemCommand)
         {
             int versionNumber = 0;
-            int? ver = int.TryParse(renameInventoryItemCommnad.ConcurrencyVersion, out versionNumber)
+            int? ver = int.TryParse(renameInventoryItemCommand.ConcurrencyVersion, out versionNumber)
                            ? (int?) versionNumber
                            : null;
 
             _bus.Send(new RenameInventoryItem(id,
-                                              renameInventoryItemCommnad.NewName, ver));
+                                              renameInventoryItemCommand.NewName, ver));
 
             return Request.CreateResponse(HttpStatusCode.Accepted);
 

@@ -69,7 +69,7 @@ function DeactivateInventoryItemCommand() {
 
 }
 
-function RenameInventoryItemCommnad(newName) {
+function RenameInventoryItemCommand(newName) {
     this.newName = newName;
 }
 
@@ -148,7 +148,7 @@ function EditCtrl($scope, $location, $http, $routeParams, cqrsUrl) {
                 
                 $http({
                     method: "PUT",
-                    data: new RenameInventoryItemCommnad($scope.inventoryItem.name),
+                    data: new RenameInventoryItemCommand($scope.inventoryItem.name),
                     url: cqrsUrl + "/" + $routeParams.inventoryItemId,
                     $scope: $scope
                 })
