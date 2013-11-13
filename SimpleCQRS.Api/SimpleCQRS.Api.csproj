@@ -45,9 +45,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AspNetWebApi.ApiActionSelector.0.4.0.0\lib\net45\ApiActionSelector.dll</HintPath>
     </Reference>
-    <Reference Include="FiveLevelsOfMediaType, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FiveLevelsOfMediaType, Version=0.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AspNetWebApi.FiveLevelsOfMediaType.0.3.0.0\lib\net45\FiveLevelsOfMediaType.dll</HintPath>
+      <HintPath>..\packages\AspNetWebApi.FiveLevelsOfMediaType.0.3.1.0\lib\net45\FiveLevelsOfMediaType.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
