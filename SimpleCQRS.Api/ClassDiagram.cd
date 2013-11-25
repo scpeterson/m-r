@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SimpleCQRS.Api.PublicDomain.DeactivateInventoryItemCommand" BaseTypeListCollapsed="true">
+    <Position X="3.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AEACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PublicDomain\Commands.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SimpleCQRS.Api.PublicDomain.CreateInventoryItemCommand">
+    <Position X="7" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PublicDomain\Commands.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimpleCQRS.Api.PublicDomain.RenameInventoryItemCommand" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="3.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AEACAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>PublicDomain\Commands.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SimpleCQRS.Api.PublicDomain.CheckInItemsToInventoryCommand">
+    <Position X="0.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PublicDomain\Commands.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimpleCQRS.Api.PublicDomain.RemoveItemsFromInventoryCommand">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PublicDomain\Commands.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimpleCQRS.Api.PublicDomain.InventoryItemDetail" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACACAAAAAAAAAAAAAAgAQAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>PublicDomain\ReadModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SimpleCQRS.Api.PublicDomain.InventoryItemListData" Collapsed="true">
+    <Position X="3" Y="2.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PublicDomain\ReadModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimpleCQRS.Api.PublicDomain.InventoryItemListDataCollection" BaseTypeListCollapsed="true">
+    <Position X="6" Y="3.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PublicDomain\ReadModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="SimpleCQRS.Api.Concurrency.IConcurrencyAware">
+    <Position X="6.75" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Concurrency\IConcurrencyAware.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
