@@ -145,7 +145,7 @@ namespace SimpleCQRS.Api.Concurrency
             using (var provider = new AesCryptoServiceProvider())
             {
 
-                using (var transform = provider.CreateDecryptor(RGB, Encoding.ASCII.GetBytes(iv.PadRight(16))))
+                using (var transform = provider.CreateDecryptor(RGB, Encoding.ASCII.GetBytes(iv.PadRight(16).Substring(0,16))))
                 {
                     var buffer = Convert.FromBase64String(base64);
                     var finalBlock = transform.TransformFinalBlock(buffer, 0, buffer.Length);
@@ -158,7 +158,7 @@ namespace SimpleCQRS.Api.Concurrency
         {
             using (var provider = new AesCryptoServiceProvider())
             {
-                using (var transform = provider.CreateEncryptor(RGB, Encoding.ASCII.GetBytes(iv.PadRight(16))))
+                using (var transform = provider.CreateEncryptor(RGB, Encoding.ASCII.GetBytes(iv.PadRight(16).Substring(0, 16))))
                 {
                     var buffer = Encoding.UTF8.GetBytes(data.PadRight(16));
                     var finalBlock = transform.TransformFinalBlock(buffer, 0, buffer.Length);
