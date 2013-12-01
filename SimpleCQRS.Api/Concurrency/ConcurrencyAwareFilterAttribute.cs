@@ -31,12 +31,6 @@ namespace SimpleCQRS.Api.Concurrency
         }
 
         // Disclaimer: this is not recommended secure encryption. Just for demo purposes
-        private static byte[] IV = new byte[] { 
-            134, 209, 1, 34, 108, 89, 23, 42 ,
-            134, 209, 1, 34, 118, 89, 23, 42
-        };
-
-        // Disclaimer: this is not recommended secure encryption. Just for demo purposes
         private static byte[] RGB = new byte[] { 
             134, 209, 1, 34, 108, 89, 23, 42 ,            
             134, 209, 1, 34, 108, 19, 23, 42
@@ -63,7 +57,8 @@ namespace SimpleCQRS.Api.Concurrency
                     // we take only the first ONLY!
                     try
                     {
-                        var decrypted = Decrypt(actionContext.Request.Headers.IfMatch.First().Tag.Trim('"'));
+                        var decrypted = Decrypt(actionContext.Request.Headers.IfMatch.First().Tag.Trim('"')
+                            , actionContext.Request.Headers.AcceptEncoding.ToString()); // this is the VARY header
                         concurrencyAware.ConcurrencyVersion = decrypted.Trim();
 
                     }
@@ -104,7 +99,8 @@ namespace SimpleCQRS.Api.Concurrency
                     {
                         if (concurrencyAware.ConcurrencyVersion != null)
                         {
-                            var eTagString = Encrypt(concurrencyAware.ConcurrencyVersion);
+                            var eTagString = Encrypt(concurrencyAware.ConcurrencyVersion, 
+                                actionExecutedContext.Request.Headers.AcceptEncoding.ToString()); // this is the VARY header
                             eTag = "\"" + eTagString + "\"";
                         }
                     }
@@ -143,12 +139,13 @@ namespace SimpleCQRS.Api.Concurrency
 
         }
 
-        private static string Decrypt(string base64)
+        private static string Decrypt(string base64, string iv)
         {
 
             using (var provider = new AesCryptoServiceProvider())
             {
-                using (var transform = provider.CreateDecryptor(RGB, IV))
+
+                using (var transform = provider.CreateDecryptor(RGB, Encoding.ASCII.GetBytes(iv.PadRight(20))))
                 {
                     var buffer = Convert.FromBase64String(base64);
                     var finalBlock = transform.TransformFinalBlock(buffer, 0, buffer.Length);
@@ -157,11 +154,11 @@ namespace SimpleCQRS.Api.Concurrency
             }
         }
 
-        private static string Encrypt(string data)
+        private static string Encrypt(string data, string iv)
         {
             using (var provider = new AesCryptoServiceProvider())
             {
-                using (var transform = provider.CreateEncryptor(RGB, IV))
+                using (var transform = provider.CreateEncryptor(RGB, Encoding.ASCII.GetBytes(iv.PadRight(20))))
                 {
                     var buffer = Encoding.UTF8.GetBytes(data.PadRight(16));
                     var finalBlock = transform.TransformFinalBlock(buffer, 0, buffer.Length);
