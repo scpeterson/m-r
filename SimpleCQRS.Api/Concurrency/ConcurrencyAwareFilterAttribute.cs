@@ -144,7 +144,7 @@ namespace SimpleCQRS.Api.Concurrency
 
             using (var provider = new AesCryptoServiceProvider())
             {
-
+                // TODO: change to use hash of IV
                 using (var transform = provider.CreateDecryptor(RGB, Encoding.ASCII.GetBytes(iv.PadRight(16).Substring(0,16))))
                 {
                     var buffer = Convert.FromBase64String(base64);
@@ -158,6 +158,7 @@ namespace SimpleCQRS.Api.Concurrency
         {
             using (var provider = new AesCryptoServiceProvider())
             {
+                // TODO: change to use hash of IV
                 using (var transform = provider.CreateEncryptor(RGB, Encoding.ASCII.GetBytes(iv.PadRight(16).Substring(0, 16))))
                 {
                     var buffer = Encoding.UTF8.GetBytes(data.PadRight(16));
