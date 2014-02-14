@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 using SimpleCQRS.Api.Concurrency;
 
 namespace SimpleCQRS.Api.PublicDomain
@@ -15,13 +15,12 @@ namespace SimpleCQRS.Api.PublicDomain
         public int CurrentCount { get; set; }
         private string _concurrencyVersion;
 
-
         public InventoryItemDetail(Guid id, string name, int currentCount, int version)
         {
             Id = id;
             Name = name;
             CurrentCount = currentCount;
-            _concurrencyVersion = version.ToString();
+            _concurrencyVersion = version.ToString(CultureInfo.InvariantCulture);
         }
 
         string IConcurrencyAware.ConcurrencyVersion

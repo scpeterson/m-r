@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 using SimpleCQRS.Api.PublicDomain;
 
@@ -11,8 +8,8 @@ namespace SimpleCQRS.Api.Controllers
 {
     public class InventoryItemController : ApiController
     {
-        private FakeBus _bus;
-        private ReadModelFacade _readmodel;
+        private readonly FakeBus _bus;
+        private readonly ReadModelFacade _readmodel;
 
         public InventoryItemController()
         {
@@ -36,7 +33,7 @@ namespace SimpleCQRS.Api.Controllers
         public HttpResponseMessage Delete(Guid id, DeactivateInventoryItemCommand deactivateInventoryItem)
         {
 
-            int versionNumber = 0;
+            int versionNumber;
             int? ver = int.TryParse(deactivateInventoryItem.ConcurrencyVersion, out versionNumber)
                            ? (int?) versionNumber
                            : null;
@@ -50,13 +47,12 @@ namespace SimpleCQRS.Api.Controllers
 
         public HttpResponseMessage Put(Guid id, RenameInventoryItemCommand renameInventoryItemCommand)
         {
-            int versionNumber = 0;
+            int versionNumber;
             int? ver = int.TryParse(renameInventoryItemCommand.ConcurrencyVersion, out versionNumber)
                            ? (int?) versionNumber
                            : null;
 
-            _bus.Send(new RenameInventoryItem(id,
-                                              renameInventoryItemCommand.NewName, ver));
+            _bus.Send(new RenameInventoryItem(id, renameInventoryItemCommand.NewName, ver));
 
             return Request.CreateResponse(HttpStatusCode.Accepted);
 
@@ -65,8 +61,7 @@ namespace SimpleCQRS.Api.Controllers
 
         public HttpResponseMessage Post(Guid id, CheckInItemsToInventoryCommand checkInItemsToInventory)
         {
-            _bus.Send(new CheckInItemsToInventory(id,
-                                                  checkInItemsToInventory.Count
+            _bus.Send(new CheckInItemsToInventory(id, checkInItemsToInventory.Count
                           ));
 
             return Request.CreateResponse(HttpStatusCode.Accepted);
@@ -76,8 +71,7 @@ namespace SimpleCQRS.Api.Controllers
         public HttpResponseMessage Post(Guid id, RemoveItemsFromInventoryCommand removeItemsFromInventory)
         {
 
-            _bus.Send(new RemoveItemsFromInventory(id,
-                                                   removeItemsFromInventory.Count));
+            _bus.Send(new RemoveItemsFromInventory(id, removeItemsFromInventory.Count));
 
             return Request.CreateResponse(HttpStatusCode.Accepted);
 
@@ -95,9 +89,8 @@ namespace SimpleCQRS.Api.Controllers
             var detailsDto = _readmodel.GetInventoryItemDetails(id);
             if (detailsDto == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
-            else
-                return new InventoryItemDetail(detailsDto.Id, detailsDto.Name,
-                                               detailsDto.CurrentCount, detailsDto.Version);
+            
+            return new InventoryItemDetail(detailsDto.Id, detailsDto.Name, detailsDto.CurrentCount, detailsDto.Version);
         }
 
         public HttpResponseMessage Options()

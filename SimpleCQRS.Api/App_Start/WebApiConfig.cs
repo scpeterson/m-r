@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
 using FiveLevelsOfMediaType;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SimpleCQRS.Api.Concurrency;
 
-namespace SimpleCQRS.Api.App_Start
+namespace SimpleCQRS.Api
 {
     public static class WebApiConfig
     {
@@ -27,15 +23,9 @@ namespace SimpleCQRS.Api.App_Start
 
             config.AddFiveLevelsOfMediaType();
 
-
-
-
-
             config.Filters.Add(new ConcurrencyAwareFilterAttribute());
             config.Filters.Add(new ConcurrencyExceptionFilterAttribute());
 
         }
     }
-
-
 }

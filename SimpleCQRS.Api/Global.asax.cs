@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.Security;
-using System.Web.SessionState;
-using SimpleCQRS.Api.App_Start;
 
 namespace SimpleCQRS.Api
 {
-    public class Global : System.Web.HttpApplication
+    public class Global : HttpApplication
     {
         internal static FakeBus _bus = new FakeBus();
         internal static EventStore storage = new EventStore(_bus);

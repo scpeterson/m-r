@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace SimpleCQRS.Api.App_Start
+namespace SimpleCQRS.Api
 {
     public static class MvcConfig
     {
@@ -31,5 +27,4 @@ namespace SimpleCQRS.Api.App_Start
         }
 
     }
-
 }

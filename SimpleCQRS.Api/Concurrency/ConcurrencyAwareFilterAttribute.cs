@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
@@ -31,13 +27,13 @@ namespace SimpleCQRS.Api.Concurrency
         }
 
         // Disclaimer: this is not recommended secure encryption. Just for demo purposes
-        private static byte[] RGB = new byte[] { 
+        private static readonly byte[] RGB = new byte[] { 
             134, 209, 1, 34, 108, 89, 23, 42 ,            
             134, 209, 1, 34, 108, 19, 23, 42
         };
 
-        private int _maxAgeInSeconds;
-        private bool _isPublic;
+        private readonly int _maxAgeInSeconds;
+        private readonly bool _isPublic;
 
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
@@ -131,7 +127,7 @@ namespace SimpleCQRS.Api.Concurrency
 
             context.Response.Headers.ETag = new EntityTagHeaderValue(eTag);
             context.Response.Headers.CacheControl =
-                new CacheControlHeaderValue()
+                new CacheControlHeaderValue
                 {
                     MaxAge = TimeSpan.FromSeconds(maxAge),
                     Private = !isPublic

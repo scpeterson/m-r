@@ -13,7 +13,7 @@ var constants = {
     concurrencyVersionName: "$concurrencyVersion$"
 };
 
-angular.module('cqrsSample', []).
+angular.module('cqrsSample', ['ngRoute']).
     value('cqrsUrl', document.URL.substring(0, document.URL.indexOf("index.html")) + "api/InventoryItem").
     config(function($routeProvider) {
         $routeProvider.
