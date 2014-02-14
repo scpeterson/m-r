@@ -28,7 +28,7 @@
             topSettings.processData = false;
         }
 
-        return oldAjax(topSettings);
+        oldAjax(topSettings);
 
     };
 
@@ -43,7 +43,7 @@
             }
             else {
                 contentType = constants.forms;
-                data = $.param(settings.data);
+                data = $.params(settings.data);
             }
 
             // set header and data

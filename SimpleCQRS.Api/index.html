@@ -3,8 +3,8 @@
 <head>
     <title>Simplest possible thing</title>
     <link href="Content/Site.css" rel="stylesheet" />
-    <link href="Content/fontawesome/font-awesome.css" rel="stylesheet" />
-    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
+    <link href="Content/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" />
 </head>
     <body>
        <header>
@@ -30,14 +30,14 @@
             <p>
                 This prototype exemplifies:
                 <ul>
-                    <li>Forming the API's Public Domain abstracing Server/BoundedCountext's internal domain. 
+                    <li>Forming the API's Public Domain abstracting Server/BoundedCountext's internal domain. 
                         Public domain is composed of DTOs and separate commands.
                     </li>
                     <li>
                         Service has been exposed as resources. Resource accept GET, POST, 
                         DELETE and PUT requests - currently OPTIONS is not implemented. 
                         <ul>
-                            <li><pre>GET /api/InventoryItem</pre>  [gets all items]</span></li>
+                            <li><pre>GET /api/InventoryItem</pre>  [gets all items]</li>
                             <li><pre>GET /api/InventoryItem/{id}</pre> [gets detail of a single item]</li>
                             <li><pre>POST /api/InventoryItem</pre> [creates an item]</li>
                             <li><pre>POST /api/InventoryItem/{id}</pre>* [checks in stock items to the inventory]</li>
